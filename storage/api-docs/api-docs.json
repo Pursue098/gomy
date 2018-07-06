@@ -1,0 +1,1707 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Cyrano api swagger",
+        "version": "1.0.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/api/v1/project/{project_id}/loyalties": {
+            "get": {
+                "summary": "List all Loyalty Program of a project",
+                "description": "List all Loyalty Program of a project",
+                "operationId": "loyalty.index",
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new Loyalty Program and return it",
+                "description": "Create a new Loyalty Program and return it",
+                "operationId": "loyalty.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Loyalty Program",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/{loyalty_id}": {
+            "put": {
+                "summary": "Update an existing Loyalty Program",
+                "description": "Update an existing Loyalty Program",
+                "operationId": "loyalty.update",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "loyalty_id",
+                        "in": "path",
+                        "description": "ID of the loyalty program",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty_update"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/{loyalty_id}/channels/poynts": {
+            "post": {
+                "summary": "Add a Poynt channel configuration to the specified Loyalty Program",
+                "description": "Add a Poynt channel configuration to the specified Loyalty Program",
+                "operationId": "loyalty.channels.add",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "loyalty_id",
+                        "in": "path",
+                        "description": "ID of the loyalty program",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Poynt Channel Confgiguration",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty_poynt_config"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "channel already associated"
+                    },
+                    "404": {
+                        "description": "project not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/{loyalty_id}/dashboard/metrics": {
+            "get": {
+                "description": "Retrieve loyalty dashboard metrics",
+                "operationId": "loyalty.dashboard.metrics",
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "loyalty_id",
+                        "in": "path",
+                        "description": "ID of the loyalty program",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "points": {
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "used": {
+                                            "type": "integer",
+                                            "example": 20
+                                        },
+                                        "unused": {
+                                            "type": "integer",
+                                            "example": 80
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "channels": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "users": {
+                                    "type": "integer",
+                                    "example": 100
+                                },
+                                "loyalties": {
+                                    "type": "integer",
+                                    "example": 3
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/{loyalty_id}/dashboard/tops": {
+            "get": {
+                "description": "Retrieve loyalty dashboard top members",
+                "operationId": "loyalty.dashboard.tops",
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "loyalty_id",
+                        "in": "path",
+                        "description": "ID of the loyalty program",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "by_points": {
+                                    "properties": {
+                                        "uuid": {
+                                            "type": "string",
+                                            "example": "dc640254-9745-4c52-be99-b44fbe0029c7"
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "Test"
+                                        },
+                                        "last_name": {
+                                            "type": "integer",
+                                            "example": "User"
+                                        },
+                                        "points": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "channels": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1644700234
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "poynt"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "by_spending": {
+                                    "properties": {
+                                        "uuid": {
+                                            "type": "string",
+                                            "example": "dc640254-9745-4c52-be99-b44fbe0029c7"
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "Test"
+                                        },
+                                        "last_name": {
+                                            "type": "integer",
+                                            "example": "User"
+                                        },
+                                        "points": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "channels": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1644700234
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "poynt"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "by_transactions": {
+                                    "properties": {
+                                        "uuid": {
+                                            "type": "string",
+                                            "example": "dc640254-9745-4c52-be99-b44fbe0029c7"
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "Test"
+                                        },
+                                        "last_name": {
+                                            "type": "integer",
+                                            "example": "User"
+                                        },
+                                        "points": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "channels": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1644700234
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "poynt"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/{loyalty_id}/leaderboard": {
+            "get": {
+                "description": "Retrieve paginated list of members of loyalty",
+                "operationId": "loyalty.leaderboard",
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "loyalty_id",
+                        "in": "path",
+                        "description": "ID of the loyalty program",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/{loyalty_id}/leaderboard/search": {
+            "post": {
+                "description": "Retrieve paginated list of filtered members by search",
+                "operationId": "loyalty.leaderboard.search",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "loyalty_id",
+                        "in": "path",
+                        "description": "ID of the loyalty program",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "search": {
+                                    "description": "Search string",
+                                    "type": "string",
+                                    "example": "Test"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/{loyalty_id}/leaderboard/member/{uuid}": {
+            "get": {
+                "description": "Retrieve a memmber of a loyalty and his metrics",
+                "operationId": "loyalty.leaderboard.member",
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "loyalty_id",
+                        "in": "path",
+                        "description": "ID of the loyalty program",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of a member",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "properties": {
+                                "member": {
+                                    "properties": {
+                                        "uuid": {
+                                            "type": "string",
+                                            "example": "dc640254-9745-4c52-be99-b44fbe0029c7"
+                                        },
+                                        "first_name": {
+                                            "type": "string",
+                                            "example": "Test"
+                                        },
+                                        "last_name": {
+                                            "type": "integer",
+                                            "example": "User"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "example@example.com"
+                                        },
+                                        "phone": {
+                                            "type": "string",
+                                            "example": "+393390000000"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2018-05-31T16:53:03+0000"
+                                        },
+                                        "subscribed_at": {
+                                            "type": "string",
+                                            "example": "2018-05-31T16:53:03+0000"
+                                        },
+                                        "note": {
+                                            "type": "string",
+                                            "example": "Lorem ipsum dolor sit amet."
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "points": {
+                                    "properties": {
+                                        "total": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "used": {
+                                            "type": "integer",
+                                            "example": 20
+                                        },
+                                        "unused": {
+                                            "type": "integer",
+                                            "example": 80
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "channels": {
+                                    "type": "integer",
+                                    "example": 1
+                                },
+                                "interactions": {
+                                    "type": "integer",
+                                    "example": 5
+                                },
+                                "last_interaction": {
+                                    "type": "integer",
+                                    "example": 30
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project/loyalty/member not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/loyalties/members/verify_pin": {
+            "post": {
+                "summary": "Verify PIN and return member with his projects",
+                "description": "Verify PIN and return member with his projects",
+                "operationId": "loyalties.members.verify_pin",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Loyalty Member PIN",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty_pin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "multiple members found, something is wrong"
+                    },
+                    "404": {
+                        "description": "pin not valid, member not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/loyalties/members/search": {
+            "post": {
+                "summary": "Search Member by uuid, email or phone number return it with his projects",
+                "description": "Search Member by uuid, email or phone number return it with his projects",
+                "operationId": "loyalties.members.search",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Loyalty Member Search",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty_member_search"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "multiple users found, something is wrong"
+                    },
+                    "404": {
+                        "description": "member not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/members/register": {
+            "post": {
+                "summary": "Send registration mail/sms to new member",
+                "description": "Send registration mail/sms to new member",
+                "operationId": "loyalties.members.register_notify",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "New Loyalty Member",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty_member_search"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "member already exists"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/members/subscribe": {
+            "put": {
+                "summary": "Send subscription mail/sms to an existing member",
+                "description": "Send subscription mail/sms to an existing member",
+                "operationId": "loyalties.members.subscribe_notify",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Loyalty Member",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty_member_search"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "already subscribed"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "multiple members found, something is wrong"
+                    },
+                    "404": {
+                        "description": "member not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/loyalties/members/{uuid}/projects": {
+            "put": {
+                "summary": "Subscribe an existing member to a project loyalties",
+                "description": "Subscribe an existing member to a project loyalties",
+                "operationId": "loyalties.members.subscribe",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of a member",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/project_id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "already subscribed"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project or member not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/loyalties/members/create": {
+            "post": {
+                "summary": "Create a loyalty member in ES",
+                "description": "Create a loyalty member in ES",
+                "operationId": "loyalties.members.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Loyalty Member",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty_member"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "multiple crm users found, something is wrong"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/{loyalty_id}/leaderboard/member/{uuid}/address": {
+            "put": {
+                "description": "Save loyalty member address in CRM",
+                "operationId": "loyalty.leaderboard.member.address",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "loyalty_id",
+                        "in": "path",
+                        "description": "ID of the loyalty program",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of a member",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Loyalty Member Address",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty_member_address"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project/loyalty/member not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{project_id}/loyalties/{loyalty_id}/leaderboard/member/{uuid}/note": {
+            "put": {
+                "description": "Save loyalty member note in CRM",
+                "operationId": "loyalty.leaderboard.member.note",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "loyalty_id",
+                        "in": "path",
+                        "description": "ID of the loyalty program",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID of a member",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Loyalty Member Note",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/loyalty_member_note"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project/loyalty/member not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/projects": {
+            "post": {
+                "summary": "Create a Project",
+                "description": "Create a new Project",
+                "operationId": "project.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/project"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/{project_id}/channels/poynts": {
+            "post": {
+                "summary": "Create a new Poynt Channel",
+                "description": "Create a new Poynt Channel",
+                "operationId": "project.channels.poynt.create",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "project_id",
+                        "in": "path",
+                        "description": "ID of the project",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/poynt_channel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "404": {
+                        "description": "project not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/projects/channels/poynts": {
+            "get": {
+                "summary": "Find a Poynt Project and Channel by business_id and device_id",
+                "description": "Find a Poynt Project and Channel by business_id and device_id",
+                "operationId": "project.channels.poynt.find",
+                "parameters": [
+                    {
+                        "name": "business_id",
+                        "in": "query",
+                        "description": "Business ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    },
+                    {
+                        "name": "device_id",
+                        "in": "query",
+                        "description": "Device ID",
+                        "required": true,
+                        "type": "string",
+                        "format": "urn:tid:uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "not acceptable"
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "403": {
+                        "description": "another channel is already associated"
+                    },
+                    "404": {
+                        "description": "channel not found"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "summary": "Check the login credentials and get the access token",
+                "description": "Check the login credentials and get the access token",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "User email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "User password",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "summary": "Create a new user and get the access token",
+                "description": "Create a new user and get the access token",
+                "operationId": "signup",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "User name",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "User email",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "User password",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "company",
+                        "in": "formData",
+                        "description": "User company",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "in": "formData",
+                        "description": "Company address",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "vat_number",
+                        "in": "formData",
+                        "description": "Company vat_number",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sale_points",
+                        "in": "formData",
+                        "description": "How many sale points?",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "device_id",
+                        "in": "formData",
+                        "description": "deviceId of poynt os app",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "business_id",
+                        "in": "formData",
+                        "description": "businessId of poynt os app",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/forget_password": {
+            "post": {
+                "summary": "Check the email and Send a reset link to the given user  ",
+                "description": "Check the email and Send a reset link to the given user ",
+                "operationId": "forget_password",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "User email",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/verify": {
+            "post": {
+                "summary": "User verification ",
+                "description": "User verification ",
+                "operationId": "verifyUser",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "User email",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/update": {
+            "put": {
+                "summary": "Update a user profile",
+                "description": "Update a user profile",
+                "operationId": "updateUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "User Id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "company",
+                        "in": "path",
+                        "description": "User company",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "address",
+                        "in": "path",
+                        "description": "Company address",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/skip_tutorial": {
+            "put": {
+                "summary": "Update user profile for skip tutorial or not",
+                "description": "Update user profile for skip tutorial or not",
+                "operationId": "skip_tutorial",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "User Id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "skip_tutorial ",
+                        "in": "path",
+                        "description": "User skip_tutorial",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/delete": {
+            "delete": {
+                "summary": "Hard delete user profile with all relational data",
+                "description": "Hard delete user profile with all relational data",
+                "operationId": "deleteUser",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "User email for cross verify",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        },
+        "/api/v1/transactions": {
+            "get": {
+                "summary": "Get all transacctions detail",
+                "description": "Get all transacctions detail or enter send transaction id in url for single transaction /api/v1/transactions/{transaction_id}",
+                "operationId": "skip_tutorial",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "406": {
+                        "description": "not acceptable"
+                    },
+                    "500": {
+                        "description": "internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "loyalty": {
+            "description": "Loyalty Program",
+            "required": [
+                "name",
+                "start_at"
+            ],
+            "properties": {
+                "name": {
+                    "description": "Loyalty Program name",
+                    "type": "string"
+                },
+                "start_at": {
+                    "description": "Initial date of the Loyalty Program",
+                    "type": "string",
+                    "format": "date",
+                    "example": "2018-05-23"
+                }
+            },
+            "type": "object"
+        },
+        "loyalty_update": {
+            "description": "Loyalty Program",
+            "properties": {
+                "name": {
+                    "description": "Loyalty Program name",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "Status of the loyalty program",
+                    "type": "string",
+                    "enum": [
+                        "active",
+                        "suspended",
+                        "terminated"
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "loyalty_poynt_config": {
+            "description": "Poynt Channel Confgiguration",
+            "required": [
+                "channel_id"
+            ],
+            "properties": {
+                "channel_id": {
+                    "description": "ID of the Poynt channel",
+                    "type": "integer"
+                },
+                "exact": {
+                    "description": "Exact match: amount -> points",
+                    "type": "array",
+                    "items": {
+                        "required": [
+                            "amount",
+                            "points"
+                        ],
+                        "properties": {
+                            "amount": {
+                                "type": "integer"
+                            },
+                            "points": {
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "range": {
+                    "description": "Range march: from-to -> points",
+                    "type": "array",
+                    "items": {
+                        "required": [
+                            "from",
+                            "to",
+                            "points"
+                        ],
+                        "properties": {
+                            "from": {
+                                "type": "integer"
+                            },
+                            "to": {
+                                "type": "integer"
+                            },
+                            "points": {
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "items": {
+                    "description": "Items march: amount -> points",
+                    "type": "array",
+                    "items": {
+                        "required": [
+                            "amount",
+                            "points"
+                        ],
+                        "properties": {
+                            "amount": {
+                                "type": "integer"
+                            },
+                            "points": {
+                                "type": "integer"
+                            }
+                        },
+                        "type": "object"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "loyalty_pin": {
+            "description": "Loyalty Member PIN",
+            "required": [
+                "pin"
+            ],
+            "properties": {
+                "pin": {
+                    "description": "PIN",
+                    "type": "string",
+                    "minLength": 6
+                }
+            },
+            "type": "object"
+        },
+        "loyalty_member_search": {
+            "description": "Loyalty Member Search",
+            "properties": {
+                "uuid": {
+                    "description": "UUID",
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "email": {
+                    "description": "Email",
+                    "type": "string",
+                    "format": "email"
+                },
+                "phone": {
+                    "description": "Phone",
+                    "type": "string",
+                    "example": "+3900000000"
+                }
+            },
+            "type": "object"
+        },
+        "project_id": {
+            "description": "Project ID",
+            "required": [
+                "project"
+            ],
+            "properties": {
+                "project": {
+                    "description": "Project id",
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "loyalty_member": {
+            "description": "Loyalty Member",
+            "properties": {
+                "first_name": {
+                    "description": "First Name",
+                    "type": "string"
+                },
+                "last_name": {
+                    "description": "Last Name",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "Email",
+                    "type": "string",
+                    "format": "email"
+                },
+                "phone": {
+                    "description": "Phone",
+                    "type": "string",
+                    "example": "+3900000000"
+                },
+                "password": {
+                    "description": "Password",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "loyalty_member_address": {
+            "description": "Member Address",
+            "required": [
+                "address"
+            ],
+            "properties": {
+                "address": {
+                    "description": "Address",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "loyalty_member_note": {
+            "description": "Member Note",
+            "required": [
+                "note"
+            ],
+            "properties": {
+                "note": {
+                    "description": "note",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "project": {
+            "description": "Project",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "description": "Project name",
+                    "type": "string",
+                    "example": "Default Poynt Project"
+                }
+            },
+            "type": "object"
+        },
+        "poynt_channel": {
+            "description": "Poynt Channel",
+            "required": [
+                "name",
+                "business_id",
+                "device_id"
+            ],
+            "properties": {
+                "name": {
+                    "description": "Channel name",
+                    "type": "string",
+                    "example": "Default Poynt Channel"
+                },
+                "business_id": {
+                    "description": "Business ID",
+                    "type": "string",
+                    "format": "uuid",
+                    "example": "18f071cc-5ed4-4b33-80c1-305056d42bfb"
+                },
+                "device_id": {
+                    "description": "Device ID",
+                    "type": "string",
+                    "format": "urn:tid:uuid",
+                    "example": "urn:tid:48c54303-6d51-39af-bdeb-4af53f621652"
+                }
+            },
+            "type": "object"
+        }
+    }
+}
